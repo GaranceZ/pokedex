@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import generationsServices from '../Services/generationsServices';
 import Loading from "../Components/Loading";
 import Pokemons from "../Components/Pokemon"
+import NavbarPokemon from '../Components/NavbarPokemon';
 
 const PokemonByGen = () => {
 
@@ -25,6 +26,7 @@ const PokemonByGen = () => {
     
     return ( 
         <>
+        <NavbarPokemon/>
         <div className={"d-flex flex-wrap justify-content-center gap-2 "}>
         {genPoke.pokemon_species != undefined && genPoke.pokemon_species.map(genPage => {
             return <>

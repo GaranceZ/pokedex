@@ -9,12 +9,13 @@ import generationsServices from '../Services/generationsServices';
 import Generations from './Generations';
 
 
+
 function NavbarPokemon() {
   const {id} = useParams();
   const [generations, setGenerations] = useState({});
   const fetchGenerations = async () => {
     try {
-        const response = await generationsServices.getGenerations()
+        const response = await generationsServices.getGenerations(id)
         setGenerations(response.data)
     } catch (e) {
         console.log(e)
@@ -36,12 +37,14 @@ useEffect(() => {
           <Nav className="me-auto">
             <Nav.Link href="/">Pokemons</Nav.Link>
             <NavDropdown title="Générations" id="basic-nav-dropdown">
-              <NavDropdown.Item href={"/pokemon/generation/" + id}>
+              <>
                 {generations.results != undefined && generations.results.map(gen => {
-                  return <li>{gen.name}
-                  </li>
+                  return <NavDropdown.Item href={"/pokemon/generation/" + gen.name }>
+                    {gen.name}
+                  </NavDropdown.Item>
+                
                 })}
-              </NavDropdown.Item>
+              </>
              
             </NavDropdown>
           </Nav>
