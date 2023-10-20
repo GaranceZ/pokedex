@@ -6,13 +6,18 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Image from 'react-bootstrap/esm/Image';
 import { useParams } from 'react-router-dom';
 import generationsServices from '../Services/generationsServices';
+import versionsServices from '../Services/versionsServices';
+import pokedexRegionServices from '../Services/pokedexRegionServices';
 import Generations from './Generations';
-
+import '../Styles/dropDown.css'
 
 
 function NavbarPokemon() {
   const {id} = useParams();
-  const [generations, setGenerations] = useState({});
+  const [generations, setGenerations] = useState([]);
+  const [versions, setVersions] = useState([]);
+  const [pokedex, setPokedex] = useState([]);
+
   const fetchGenerations = async () => {
     try {
         const response = await generationsServices.getGenerations(id)
@@ -22,8 +27,28 @@ function NavbarPokemon() {
     }
 }
 
+const fetchVersions = async () => {
+  try{
+    const response = await versionsServices.getVersions()
+    setVersions(response.data);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+const fetchPokedex = async () => {
+  try{
+    const response = await pokedexRegionServices.getPokedex()
+    setPokedex(response.data);
+  }catch(e){
+    console.log(e);
+  }
+}
+
 useEffect(() => {
   fetchGenerations()
+  fetchVersions()
+  fetchPokedex()
 }, []);
 
 
@@ -45,7 +70,24 @@ useEffect(() => {
                 
                 })}
               </>
-             
+            </NavDropdown>
+            <NavDropdown title="Versions" id="basic-nav-dropdown2">
+              <>
+                {versions.results != undefined && versions.results.map(ver => {
+                  return <NavDropdown.Item href={"/pokemon/version/" + ver.url.substring(33).replaceAll( "/", "") }>
+                    {ver.name}
+                  </NavDropdown.Item>
+                })}
+              </>
+            </NavDropdown>
+            <NavDropdown title="Pokedex" id="basic-nav-dropdown2">
+              <>
+                {pokedex.results != undefined && pokedex.results.map(pok => {
+                  return <NavDropdown.Item href={"/pokemon/pokedex/" + pok.url.substring(33).replaceAll( "/", "")}>
+                    {pok.name}
+                  </NavDropdown.Item>
+                })}
+              </>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

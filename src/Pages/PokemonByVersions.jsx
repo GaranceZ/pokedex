@@ -1,39 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import generationsServices from '../Services/generationsServices';
+import versionsServices from '../Services/versionsServices';
 import Loading from "../Components/Loading";
 import Pokemons from "../Components/Pokemon"
 import NavbarPokemon from '../Components/NavbarPokemon';
 
-const PokemonByGen = () => {
+const PokemonByVersions = () => {
 
+    const {version} = useParams();
     const {id} = useParams();
+    const{name} = useParams()
+    const [verPoke, setVerPoke] = useState([]);
+    const [verGroup, setVerGroup] = useState([]);
     const [genPoke, setGenPoke] = useState({});
     const [loading, setLoading] = useState(true);
 
-    const fetchPokemonByGen = async () => {
+    const fetchGetPokemonByVer = async () => {
         try {
-            const response = await generationsServices.getGenerationsById(id);
-            response.data.pokemon_species.sort((firstItem, secondItem) =>
+            const response = await versionsServices.getVersionsById(version);
+            const res = await versionsServices.getVersionsGroup(response.data.version_group.name);
+            const res2 = await versionsServices.getGenerationsById(res.data.generation.name);
+            res2.data.pokemon_species.sort((firstItem, secondItem) =>
             firstItem.url.substring(41).replaceAll( "/", "") - secondItem.url.substring(41).replaceAll( "/", ""))
-            setGenPoke(response.data);
-            console.log(response.data);
+            setVerPoke(res2.data.pokemon_species);
             setLoading(false)
         } catch (e) {
             console.log(e)
         }
     }
+
+
     useEffect(() => {
-        fetchPokemonByGen()
+        fetchGetPokemonByVer()
     }, []);
     
     return ( 
         <>
         <NavbarPokemon/>
         <div className={"d-flex flex-wrap justify-content-center gap-2 "}>
-        {genPoke.pokemon_species != undefined && genPoke.pokemon_species.map(genPage => {
+        {verPoke != undefined && verPoke.map(verPage => {
             return <>
-            <Pokemons key={genPage.name} pokemon={genPage}/>
+            <Pokemons key={verPage.name} pokemon={verPage}/>
             </>
         })}
         </div>
@@ -41,4 +49,4 @@ const PokemonByGen = () => {
      );
 }
  
-export default PokemonByGen;
+export default PokemonByVersions;

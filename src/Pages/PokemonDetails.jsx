@@ -16,6 +16,7 @@ import PokemonWeakness from '../Components/PokemonWeakness';
 import PokemonTypes from '../Components/PokemonTypes';
 import NavbarPokemon from '../Components/NavbarPokemon';
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
+import Nav from 'react-bootstrap/Nav';
 
 
 
@@ -56,8 +57,8 @@ const PokemonDetails = () => {
     <NavbarPokemon/>
     <Container className={"d-flex flex-column"}>
             <ButtonGroup aria-label="Basic example">
-                <Button variant="secondary">Précédent</Button>
-                <Button variant="secondary">Suivant</Button>
+                <Button variant="secondary"><Nav.Link href={"/pokemon/details/" + (parseInt(id) - parseInt(1))}>Précédent</Nav.Link></Button>
+                <Button variant="secondary"><Nav.Link href={"/pokemon/details/" + (parseInt(id) + parseInt(1))}>Suivant</Nav.Link></Button>
             </ButtonGroup>
         {loading === false ? <>
         <div>
@@ -69,7 +70,7 @@ const PokemonDetails = () => {
                 <PokemonGraph stats={type.stats != undefined && type.stats}/>
             </div>
         <div>
-                <p>{pokemon.flavor_text_entries[24].flavor_text !=undefined && pokemon.flavor_text_entries[24].flavor_text}</p>
+                <p>{pokemon.flavor_text_entries[16].flavor_text !=undefined && pokemon.flavor_text_entries[16].flavor_text}</p>
             <PokemonInfos height={type.height} weight={type.weight}/>
                 <div>
                     <div className={"d-flex"}>

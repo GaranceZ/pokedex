@@ -11,10 +11,14 @@ function getPokemonByType(id) {
     return axios.get ("https://pokeapi.co/api/v2/pokemon/"+id)
 }
 
+function getAllPokemons() {
+    return axios.get("https://pokeapi.co/api/v2/pokemon-species?limit=1200")
+}
 
 
 export default {
     getPokemon,
     getPokemonById,
     getPokemonByType,
+    getAllPokemons,
 }
