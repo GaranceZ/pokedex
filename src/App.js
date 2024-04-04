@@ -17,8 +17,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/pokemon/details/:id" element={<PokemonDetails />} />
         <Route path="/pokemon/generation/:id" element={<PokemonByGen/>}/>
-        <Route path="pokemon/version/:version" element={<PokemonByVersions/>}/>
-        <Route path="pokemon/pokedex/:id" element={<PokemonByPokedex/>}/>
+        <Route path="/pokemon/version/:version" element={<PokemonByVersions/>}/>
+        <Route path="/pokemon/pokedex/:id" element={<PokemonByPokedex/>}/>
       </Routes>
     </BrowserRouter>
   </Container>
