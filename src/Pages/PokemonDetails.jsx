@@ -70,7 +70,7 @@ const PokemonDetails = () => {
                 <PokemonGraph stats={type.stats != undefined && type.stats}/>
             </div>
         <div>
-                <p>{pokemon.flavor_text_entries[16].flavor_text !=undefined && pokemon.flavor_text_entries[16].flavor_text}</p>
+                <p>{pokemon.flavor_text_entries[16].flavor_text != undefined && pokemon.flavor_text_entries[16].flavor_text}</p>
             <PokemonInfos height={type.height} weight={type.weight}/>
                 <div>
                     <div className={"d-flex"}>
